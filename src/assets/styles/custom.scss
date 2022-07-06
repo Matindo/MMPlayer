@@ -1,0 +1,11 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$theme-colors: (
+    'primary' : #ff8c00,
+    'danger' : #ff0000,
+    'success' : #4ae74a, 
+    'warning' : #ffff0f,
+    'secondary' : $gray-500
+);
+$body-bg: linear-gradient(180deg, rgba(106,22,166,1) 0%, rgba(52,16,91,1) 60%);
+$body-color: whitesmoke;
