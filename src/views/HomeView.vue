@@ -1,20 +1,22 @@
 <template>
   <div class="home">
     <b-container fluid>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <scrollable-div>
+        <video-holder v-for="i in 10" :key="i"></video-holder>
+      </scrollable-div>
+      <scrollable-div />
     </b-container>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import ScrollableDiv from '@/components/ScrollableDiv.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    ScrollableDiv
   }
 }
 </script>
