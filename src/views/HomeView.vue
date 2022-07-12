@@ -1,12 +1,8 @@
 <template>
-  <div class="home">
-    <b-container fluid>
-      <scrollable-div>
-        <video-holder v-for="i in 10" :key="i"></video-holder>
-      </scrollable-div>
-      <scrollable-div />
-    </b-container>
-  </div>
+  <b-container fluid>
+    <scrollable-div title="Popular Videos"/>
+    <scrollable-div title="Newest Videos"/>
+  </b-container>
 </template>
 
 <script>

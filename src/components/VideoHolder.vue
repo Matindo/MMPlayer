@@ -1,12 +1,6 @@
 <template>
  <div class="video-holder">
-  <b-card :title="videoData.title" :img-src="videoData.thumbnail" :img-alt="videoData.title" img-top>
-   <b-card-text>
-     {{ videoData.description }}
-   </b-card-text>
-   <template #footer>
-    <small class="text-muted"> {{ videoData.dateCreated }} </small>
-   </template>
+  <b-card :title="video.title" :img-src="video.thumbnail" :img-alt="video.title" overlay text-variant="white" :sub-title="video.dateCreated" sub-title-text-variant="light">
   </b-card>
  </div>
 </template>
@@ -15,28 +9,21 @@
 export default {
   name: 'VideoHolder',
   props: {
-    video: {
-      typeof: Object,
-      required: true
-    }
-  }/*,
-  data: function () {
-    return {
-      videoData: {
-        title: 'Test Video',
-        dateCreated: '22-06-2022',
-        description: 'This is a test video description to use in outr video holder container model',
-        thumbnail: 'https://picsum.photos/300/300/?image=41'
-      }
-    }
-  } */
+    video: Object
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .video-holder {
- width: 300px;
- height: 300px;
- background: seashell;
+  float: none;
+  border-radius: 5%;
+  margin: 0 1.2rem;
+  display: inline-block;
+  background: rgb(7, 7, 7);
+}
+
+.video-holder :hover {
+  box-shadow: 0px 0px 15px 1px rgba(0, 255, 234, 0.448);
 }
 </style>

@@ -6,9 +6,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item active-class="active" class="nav-link" to="/">HOME</b-nav-item>
-          <b-nav-item active-class="active" class="nav-link" to="/">SEARCH</b-nav-item>
-          <b-nav-item active-class="active" class="nav-link" to="/">ALBUMS</b-nav-item>
-          <b-nav-item active-class="active" class="nav-link" to="/">VIDEOS</b-nav-item>
+          <b-nav-item active-class="active" class="nav-link" to="/search">SEARCH</b-nav-item>
+          <!--b-nav-item active-class="active" class="nav-link" to="/albums">ALBUMS</b-nav-item>
+          <b-nav-item active-class="active" class="nav-link" to="/videos">VIDEOS</b-nav-item-->
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
