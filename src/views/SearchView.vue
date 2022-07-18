@@ -8,10 +8,7 @@
             <b-form-input id="search-input" placeholder="Enter album, song or artist to search" v-model="query">
             </b-form-input>
             <b-input-group-append>
-              <b-button variant="danger" @click="db='YT'; parseSearchString();">Search Youtube</b-button>
-            </b-input-group-append>
-            <b-input-group-append>
-              <b-button variant="warning" @click="searchLastFM">Search LastFM</b-button>
+              <b-button variant="danger" @click="searchLastFM(); searchYoutube()">Search</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form>
@@ -19,19 +16,34 @@
     </b-row>
     <b-row class="results">
       <b-col cols="12" style="padding: 1em;">
-        <b-row class="search-title">
-          <b-col cols="auto" cols-md="6" class="mr-auto">
-            <h3>Results: </h3>
-          </b-col>
-          <b-col cols="auto">
-            <span variant="secondary" class="ml-auto">Showing 25 results</span>
-          </b-col>
-        </b-row>
-        <b-row v-if="results.length < 1">
+        <b-row v-if="videos.length === 0 && tracks.length === 0">
           <b-col offset=".5">No results to show</b-col>
         </b-row>
-        <b-row v-else class="search-videos">
-          <b-col v-for="result in results" :key="result.videoId">
+        <b-row v-if="tracks.length > 0">
+          <b-row class="search-title w-100">
+            <b-col cols="auto" cols-md="6" class="mr-auto">
+              <h3>Songs: </h3>
+            </b-col>
+            <b-col cols="auto">
+              <span variant="secondary" class="ml-auto">Showing {{tracks.length}} results</span>
+            </b-col>
+          </b-row>
+            <b-table borderless dark hover responsive fixed :items="tracks" :fields="fields">
+              <template #cell(name)="data">
+                <a :href="`#${data.value.replace(/[^a-z]+/i,'-').toLowerCase()}`">{{ data.value }}</a>
+              </template>
+            </b-table>
+        </b-row>
+        <b-row v-if="videos.length > 0" class="search-videos">
+          <b-row class="search-title w-100">
+            <b-col cols="auto" cols-md="6" class="mr-auto">
+              <h3>Videos: </h3>
+            </b-col>
+            <b-col cols="auto">
+              <span variant="secondary" class="ml-auto">Showing {{videos.length}} results</span>
+            </b-col>
+          </b-row>
+          <b-col v-for="result in videos" :key="result.id.videoId">
             <video-holder :video="result"></video-holder>
           </b-col>
         </b-row>
@@ -52,10 +64,12 @@ export default {
   components: { VideoHolder },
   data: function () {
     return {
-      results: [],
+      videos: [],
+      tracks: [],
       query: '',
       db: '',
       vcounts: [],
+      fields: ['name', 'artist', 'listeners'],
       reformatedSearchString: '',
       api: {
         key: YouTube.API_KEY,
@@ -70,7 +84,7 @@ export default {
   },
   methods: {
     searchYoutube: function () {
-      this.api.q = this.query.join('+')
+      this.api.q = this.query.trim().split(' ').join('+')
       console.log('about-mounted-this.api.q=', this.api.q)
       const { baseUrl, type, order, maxResults, q, key } = this.api
       const apiUrl = `${baseUrl}part=snippet&type=${type}&order=${order}&maxResults=${maxResults}&key=${key}&q=${q}`
@@ -79,66 +93,35 @@ export default {
     },
     searchLastFM: function () {
       LastFM.searchTrack(this.query).then((results) => {
-        this.results = results
+        this.tracks = results
         // this.type = type;
         // this.hasSearch = true;
         // this.loading = false;
-        console.log(this.results)
+        console.log('tracks', this.tracks)
       })
     },
     getData: function (apiUrl) {
+      this.videos.splice(0, this.videos.length)
       axios
         .get(apiUrl)
         .then(res => {
           console.log('getdata-res=', res)
-          this.results.push(...res.data.items)
+          this.videos.push(...res.data.items)
           this.api.nextPageToken = res.data.nextPageToken
           // collect view count for each video
-          let aa = ''
-          this.results.forEach(function (x) {
-            const z = x.contentDetails.videoId
-            aa = `${z},${aa}`
-          })
-          console.log('aa1=', aa)
-          const { key } = this.api
-          const apiUrl1 = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${aa}&key=${key}`
-          console.log('homepage-apiUrl1', apiUrl1)
-          axios
-            .get(apiUrl1)
-            .then(res => {
-              this.vcounts.push(...res.data.items)
-              console.log('res', res)
-            })
         }).catch(error => console.error(error))
+      this.query = ''
     },
     parseSearchString: function () {
-      // Trim search String
       const trimmedSearchString = this.query.trim()
       console.log('searchform.vue-string=', trimmedSearchString)
       if (trimmedSearchString !== '') {
-        // Split search string
         const searchParams = trimmedSearchString.split(/\s+/)
-        // Emit event
         this.query = searchParams
-        if (this.db === 'YT') {
-          this.searchYoutube()
-          console.log('YT called')
-        } else {
-          this.searchLastFM()
-          console.log('LastFM called')
-        }
-        // Reset input
-        this.query = ''
       } else {
-        this.$router.push({ path: '/' })
+        this.query = ''
       }
     }
-  },
-  mounted: function () {
-    const { key } = this.api
-    const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails%2Cstatus&maxResults=20&playlistId=UU29ju8bIPH5as8OGnQzwJyA&key=${key}`
-    console.log('homepage-mountedapiUrl', apiUrl)
-    this.getData(apiUrl)
   }
 }
 </script>
@@ -154,5 +137,22 @@ export default {
   box-shadow: 8px 6px 22px 5px rgba(255, 255, 255, 0.264);
   background: rgba(0, 0, 0, 0.1);
   color: aliceblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap
+}
+
+.row-title {
+  width: 100%;
+  margin-right: auto;
+}
+
+.track-wrapper {
+  display: block;
+  margin: 0;
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>
