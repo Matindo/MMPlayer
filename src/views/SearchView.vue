@@ -66,10 +66,11 @@ export default {
   },
   methods: {
     searchYoutube: function () {
-      this.api.q = this.query.split(' ').join('+')
+      console.log('query is: ', this.query)
+      this.api.q = this.query.join('+')
       console.log('about-mounted-this.api.q=', this.api.q)
       const { baseUrl, type, order, maxResults, q, key } = this.api
-      const apiUrl = `${baseUrl}type=${type}&order=${order}&maxResults=${maxResults}&key=${key}&q=${q}`
+      const apiUrl = `${baseUrl}part=snippet&type=${type}&order=${order}&maxResults=${maxResults}&key=${key}&q=${q}`
       console.log('abtpage-mountedapiUrl', apiUrl)
       this.getData(apiUrl)
     },
