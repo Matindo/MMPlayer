@@ -1,6 +1,6 @@
 <template>
  <div class="video-holder">
-  <b-card :title="video.title" :img-src="video.thumbnail" :img-alt="video.title" overlay text-variant="white" :sub-title="video.dateCreated" sub-title-text-variant="light">
+  <b-card :title="video.snippet.title" :img-src="video.snippet.thumbnails.medium.url" :img-alt="video.snippet.title" overlay text-variant="white" :sub-title="video.snippet.publishedAt" sub-title-text-variant="light">
   </b-card>
  </div>
 </template>

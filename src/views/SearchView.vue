@@ -50,12 +50,11 @@ export default {
   data: function () {
     return {
       results: [],
-      searchString: '',
       query: '',
       vcounts: [],
       reformatedSearchString: '',
       api: {
-        key: API_KEY,
+        key: API_KEY.API_KEY,
         nextPageToken: '',
         q: '',
         maxResults: 25,
@@ -67,8 +66,7 @@ export default {
   },
   methods: {
     searchYoutube: function () {
-      const abc = this.query
-      this.api.q = abc.split(' ').join('+')
+      this.api.q = this.query.split(' ').join('+')
       console.log('about-mounted-this.api.q=', this.api.q)
       const { baseUrl, type, order, maxResults, q, key } = this.api
       const apiUrl = `${baseUrl}type=${type}&order=${order}&maxResults=${maxResults}&key=${key}&q=${q}`
@@ -102,15 +100,16 @@ export default {
     },
     parseSearchString: function () {
       // Trim search String
-      const trimmedSearchString = this.searchString.trim()
+      const trimmedSearchString = this.query.trim()
       console.log('searchform.vue-string=', trimmedSearchString)
       if (trimmedSearchString !== '') {
         // Split search string
         const searchParams = trimmedSearchString.split(/\s+/)
         // Emit event
         this.query = searchParams
+        this.searchYoutube()
         // Reset input
-        this.searchString = ''
+        this.query = ''
       } else {
         this.$router.push({ path: '/' })
       }
