@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <b-row class="search-pane w-100" align-h="around" align-v="baseliine">
+    <b-row class="search-pane w-100" align-h="around" align-v="center">
       <b-col cols="7">
         <b-form>
           <label class="sr-only" for="search-input">Search</label>
@@ -82,7 +82,7 @@ export default {
           this.api.nextPageToken = res.data.nextPageToken
           // collect view count for each video
           let aa = ''
-          this.videos.forEach(function (x) {
+          this.results.forEach(function (x) {
             const z = x.contentDetails.videoId
             aa = `${z},${aa}`
           })
