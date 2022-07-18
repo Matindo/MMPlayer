@@ -1,8 +1,8 @@
 <template>
- <div class="video-holder">
-  <b-card :title="video.snippet.title" :img-src="video.snippet.thumbnails.medium.url" :img-alt="video.snippet.title" overlay text-variant="white" :sub-title="video.snippet.publishedAt" sub-title-text-variant="light">
-  </b-card>
- </div>
+  <div class="video-holder">
+    <b-card :title="video.snippet.title" :img-src="video.snippet.thumbnails.medium.url" :img-alt="video.snippet.title" overlay text-variant="white" :sub-title="video.snippet.publishedAt" sub-title-text-variant="light">
+    </b-card>
+  </div>
 </template>
 
 <script>

@@ -8,7 +8,10 @@
             <b-form-input id="search-input" placeholder="Enter album, song or artist to search" v-model="query">
             </b-form-input>
             <b-input-group-append>
-              <b-button variant="danger" @click="parseSearchString">Search Youtube</b-button>
+              <b-button variant="danger" @click="db='YT'; parseSearchString();">Search Youtube</b-button>
+            </b-input-group-append>
+            <b-input-group-append>
+              <b-button variant="warning" @click="searchLastFM">Search LastFM</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form>
@@ -40,8 +43,8 @@
 <script>
 import VideoHolder from '@/components/VideoHolder.vue'
 // import InfiniteLoading from 'vue-infinite-loading'
-// import SearchResults from '@/components/SearchResults.vue'
-import API_KEY from '@/api/youtubeAPIconfig'
+import YouTube from '@/api/youtubeAPIconfig'
+import LastFM from '@/api/lastfm/services'
 import axios from 'axios'
 
 export default {
@@ -51,10 +54,11 @@ export default {
     return {
       results: [],
       query: '',
+      db: '',
       vcounts: [],
       reformatedSearchString: '',
       api: {
-        key: API_KEY.API_KEY,
+        key: YouTube.API_KEY,
         nextPageToken: '',
         q: '',
         maxResults: 25,
@@ -66,13 +70,21 @@ export default {
   },
   methods: {
     searchYoutube: function () {
-      console.log('query is: ', this.query)
       this.api.q = this.query.join('+')
       console.log('about-mounted-this.api.q=', this.api.q)
       const { baseUrl, type, order, maxResults, q, key } = this.api
       const apiUrl = `${baseUrl}part=snippet&type=${type}&order=${order}&maxResults=${maxResults}&key=${key}&q=${q}`
       console.log('abtpage-mountedapiUrl', apiUrl)
       this.getData(apiUrl)
+    },
+    searchLastFM: function () {
+      LastFM.searchTrack(this.query).then((results) => {
+        this.results = results
+        // this.type = type;
+        // this.hasSearch = true;
+        // this.loading = false;
+        console.log(this.results)
+      })
     },
     getData: function (apiUrl) {
       axios
@@ -108,7 +120,13 @@ export default {
         const searchParams = trimmedSearchString.split(/\s+/)
         // Emit event
         this.query = searchParams
-        this.searchYoutube()
+        if (this.db === 'YT') {
+          this.searchYoutube()
+          console.log('YT called')
+        } else {
+          this.searchLastFM()
+          console.log('LastFM called')
+        }
         // Reset input
         this.query = ''
       } else {

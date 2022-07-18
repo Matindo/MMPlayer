@@ -4,4 +4,4 @@ export default {
   sharedSecret: 'ee371514fd557d83048f32db5f206bb1',
   registeredTo: 'MMPlayer',
   url: 'https://ws.audioscrobbler.com/2.0/'
-};
+}
