@@ -108,7 +108,7 @@ export default {
           console.log('getdata-res=', res)
           this.videos.push(...res.data.items)
           this.api.nextPageToken = res.data.nextPageToken
-          // collect view count for each video
+          this.$store.dispatch('SET_VIDEOS', this.videos)
         }).catch(error => console.error(error))
       this.query = ''
     },

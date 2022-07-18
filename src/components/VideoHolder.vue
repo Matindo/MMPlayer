@@ -1,5 +1,5 @@
 <template>
-  <div class="video-holder">
+  <div class="video-holder" @click="playVideo">
     <div class="thumbnail">
       <b-img :src="video.snippet.thumbnails.medium.url" :alt="video.snippet.title"></b-img>
     </div>
@@ -12,7 +12,6 @@
           <a href="">
             {{video.snippet.channelTitle}}
           </a>
-          <span>{{video.snippet.date}}</span>
         </div>
       </div>
     </div>
@@ -30,6 +29,12 @@ export default {
   computed: {
     date: function () {
       return moment(this.video.snippet.publishedAt, moment.ISO_8601).format('LLL')
+    }
+  },
+  methods: {
+    playVideo: function () {
+      this.$store.dispatch('SET_CURRENT_VIDEO', this.video)
+      this.$router.push('/viewer')
     }
   }
 }

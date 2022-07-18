@@ -13,6 +13,7 @@
 
 <script>
 import VideoHolder from '@/components/VideoHolder.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ScrollableDiv',
@@ -20,68 +21,10 @@ export default {
   components: {
     VideoHolder
   },
-  data: function () {
-    return {
-      videos: []
-    }
-  },
-  methods: {
-    loadVideos: function () {
-      this.videos = [
-        {
-          videoID: '1',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '2',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '3',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '4',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '5',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '6',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        },
-        {
-          videoID: '7',
-          title: 'Test Video',
-          dateCreated: '22-06-2022',
-          description: 'This is a test video description to use in outr video holder container model',
-          thumbnail: 'https://picsum.photos/300/300/?image=41'
-        }
-      ]
-    }
-  },
-  created: function () {
-    this.loadVideos()
+  computed: {
+    ...mapGetters({
+      videos: 'VIDEOS'
+    })
   }
 }
 </script>
