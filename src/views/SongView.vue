@@ -31,9 +31,9 @@
       </b-row>
       <hr />
       <h3 class="text-light">Artist Details: </h3>
-      <b-row class="w-100 mb-2" align-h="around" align-v="start">
+      <b-row class="w-100 m-2" align-h="around" align-v="stretch">
         <b-col class="artist" cols="12" md="6">
-          <b-row class="artist-data w-100">
+          <b-row class="artist-data w-100 ml-2 p-2">
             <b-media>
               <template #aside>
                 <b-img :src="artist.image[1]['#text']" blank-color="#ccc" width="64" alt="placeholder"></b-img>
@@ -44,19 +44,15 @@
               <p>{{artist.bio.content}}</p>
             </div>
           </b-row>
-          <b-row class="top-songs w-100">
+          <b-row class="top-songs w-100 ml-2 p-2">
             <h4 class="text-light">Popular songs:</h4>
             <song-table :borderlessOption="true" :smallOption="true" :strippedOption="false"
               :tracks="popularArtistSongs" />
           </b-row>
         </b-col>
-        <b-col cols="12" md="6">
+        <b-col cols="12" md="6" class="album-frame">
           <h4 class="text-light">Other albums by this artist:</h4>
-          <ul role="list">
-            <li v-for="album in albums" :key="album.mbid">
-              <a @click="searchAlbum(album)">{{album.name}} - {{album.year}}</a>
-            </li>
-          </ul>
+            <album-holder v-for="album in albums" :key="album.mbid" :album="album.name" />
         </b-col>
       </b-row>
     </b-row>
@@ -66,8 +62,10 @@
 <script>
 import SongTable from '@/components/SongTable.vue'
 import { mapGetters } from 'vuex'
+import AlbumHolder from '@/components/AlbumHolder.vue'
+
 export default {
-  components: { SongTable },
+  components: { SongTable, AlbumHolder },
   name: 'SongView',
   computed: {
     ...mapGetters({
@@ -101,6 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 * {
   color: whitesmoke
 }
@@ -170,12 +169,21 @@ li {
   }
  }
 }
-.song-info, .video-details {
+.song-info {
   display: inline-flexbox;
   flex-direction: column;
 }
 .scrollable-div {
   overflow-y: scroll;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+.album-frame {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: auto;
   white-space: nowrap;
 }
 </style>
