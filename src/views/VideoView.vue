@@ -1,23 +1,23 @@
 <template>
   <b-container fluid>
-    <b-row class="main-details w-100 mb-3">
-      <b-col cols="7">
+    <b-row class="main-details mb-3" align-h="between" align-v="stretch">
+      <b-col cols="12" md="7" class="video-frame">
         <b-embed type="iframe" aspect="16by9" :src="link" allowfullscreen>
         </b-embed>
       </b-col>
-      <b-col cols="auto" class="text-details">
-        <span class="title">{{video.title}}</span><br />
-        <span class="channel-title">{{video.channelTitle}}</span><br />
-        <span class="description">{{video.description}}</span>
+      <b-col cols="12" md="5" class="text-details">
+        <span class="title">{{video.snippet.title}}</span><br />
+        <span class="channel-title text-secondary">{{video.snippet.channelTitle}}</span><br />
+        <span class="description">{{video.snippet.description}}</span>
       </b-col>
     </b-row>
-    <b-row class="w-100 related">
-      <b-row class="search-title m-2">
-        <h3>Similar Videos: </h3>
+    <b-row class="w-100">
+      <h3 class="text-light">Similar Videos: </h3>
+      <b-row class="m-2 related">
+        <b-col v-for="result in videos" :key="result.id.videoId">
+          <video-holder :video="result"></video-holder>
+        </b-col>
       </b-row>
-      <b-col v-for="result in videos" :key="result.id.videoId">
-        <video-holder :video="result"></video-holder>
-      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -37,27 +37,34 @@ export default {
       video: 'CURRENT_VIDEO',
       videos: 'VIDEOS'
     })
+  },
+  created: function () {
+    console.log(this.video)
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .main-details {
-  flex-direction: row;
-  display: inline-flex;
+  margin: 2rem;
+  width: 95%;
+  align-self: center;
+}
+.video-frame {
+  height: 70%;
 }
 .text-details {
   color: whitesmoke
 }
 .related {
   overflow-x: auto;
-  display: flex;
-  flex-direction: row;
   justify-content: space-around;
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+.title {
+  font-weight: bolder;
+}
 </style>
