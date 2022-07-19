@@ -6,17 +6,8 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item active-class="active" class="nav-link" to="/">HOME</b-nav-item>
-          <b-nav-item active-class="active" class="nav-link" to="/search">SEARCH</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-
-          <!--b-nav-item-dropdown right>
-            <template #button-content>
-              <em>COUNTRY</em>
-              </template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown-->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
