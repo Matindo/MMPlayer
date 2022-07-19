@@ -1,3 +1,4 @@
+
 /*
  * Hacky solution after Last.FM prohibited artist image usage
  * @see https://getsatisfaction.com/lastfm/topics/api-announcement-dac8oefw5vrxq
@@ -112,7 +113,11 @@ const albumDetail = (album) => {
   }
 
   if (album.tracks && album.tracks.track) {
-    detail.tracks = tracksArray(album.tracks.track, findImage(album.image, 'medium'))
+    if (Array.isArray(album.tracks.track)) {
+      detail.tracks = tracksArray(album.tracks.track, findImage(album.image, 'medium'))
+    } else {
+      detail.tracks = album.tracks.track
+    }
   }
 
   if (album.wiki && (album.wiki.summary || album.wiki.content)) {
@@ -135,9 +140,6 @@ const tracksArray = (tracks) => {
 }
 
 const trackDetail = (track) => {
-  // TODO
-  console.log(track)
-
   return track
 }
 

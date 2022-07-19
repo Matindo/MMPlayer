@@ -28,11 +28,7 @@
               <span variant="secondary" class="ml-auto">Showing {{tracks.length}} results</span>
             </b-col>
           </b-row>
-            <b-table borderless dark hover responsive fixed :items="tracks" :fields="fields">
-              <template #cell(name)="data">
-                <a :href="`#${data.value.replace(/[^a-z]+/i,'-').toLowerCase()}`">{{ data.value }}</a>
-              </template>
-            </b-table>
+          <song-table :tracks="tracks" />
         </b-row>
         <b-row v-if="videos.length > 0" class="search-videos">
           <b-row class="search-title w-100">
@@ -54,22 +50,25 @@
 
 <script>
 import VideoHolder from '@/components/VideoHolder.vue'
-// import InfiniteLoading from 'vue-infinite-loading'
 import YouTube from '@/api/youtubeAPIconfig'
 import LastFM from '@/api/lastfm/services'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+import SongTable from '@/components/SongTable.vue'
 
 export default {
   name: 'SearchView',
-  components: { VideoHolder },
+  components: { VideoHolder, SongTable },
+  computed: {
+    ...mapGetters({
+      videos: 'VIDEOS',
+      tracks: 'TRACKS'
+    })
+  },
   data: function () {
     return {
-      videos: [],
-      tracks: [],
       query: '',
       db: '',
-      vcounts: [],
-      fields: ['name', 'artist', 'listeners'],
       reformatedSearchString: '',
       api: {
         key: YouTube.API_KEY,
@@ -93,11 +92,9 @@ export default {
     },
     searchLastFM: function () {
       LastFM.searchTrack(this.query).then((results) => {
-        this.tracks = results
-        // this.type = type;
-        // this.hasSearch = true;
-        // this.loading = false;
-        console.log('tracks', this.tracks)
+        this.$store.dispatch('SET_TRACKS', results).then(() => {
+          console.log('tracks', this.tracks)
+        })
       })
     },
     getData: function (apiUrl) {
@@ -106,21 +103,10 @@ export default {
         .get(apiUrl)
         .then(res => {
           console.log('getdata-res=', res)
-          this.videos.push(...res.data.items)
+          this.$store.dispatch('SET_VIDEOS', res.data.items)
           this.api.nextPageToken = res.data.nextPageToken
-          this.$store.dispatch('SET_VIDEOS', this.videos)
         }).catch(error => console.error(error))
       this.query = ''
-    },
-    parseSearchString: function () {
-      const trimmedSearchString = this.query.trim()
-      console.log('searchform.vue-string=', trimmedSearchString)
-      if (trimmedSearchString !== '') {
-        const searchParams = trimmedSearchString.split(/\s+/)
-        this.query = searchParams
-      } else {
-        this.query = ''
-      }
     }
   }
 }

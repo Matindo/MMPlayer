@@ -19,6 +19,11 @@ const routes = [
     path: '/viewer',
     name: 'viewer',
     component: () => import('../views/VideoView.vue')
+  },
+  {
+    path: '/song',
+    name: 'song',
+    component: () => import('../views/SongView.vue')
   }
 ]
 

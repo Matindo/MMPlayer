@@ -22,13 +22,13 @@ const getTopArtists = async (country) => {
 
 const getArtistInfo = async (artist) => {
   const url = buildApiUrl('artist.getinfo', { artist: sanitize(artist) })
-  const results = []
+  let artst = null
 
-  axios.get(url).then(res => {
+  await axios.get(url).then(res => {
     console.log('getdata-artistInfo=', res)
-    results.push(...res.data.items)
+    artst = res.data.artist
   }).catch(error => console.error(error))
-  return Adapt.adaptArtists(results.artist)
+  return artst
 }
 
 const getArtistTopTags = async (artist, num) => {
@@ -45,47 +45,46 @@ const getArtistTopTags = async (artist, num) => {
 
 const getArtistTopAlbums = async (artist) => {
   const url = buildApiUrl('artist.gettopalbums', { artist: sanitize(artist) })
-  const results = []
+  let results = null
 
-  axios.get(url).then(res => {
+  await axios.get(url).then(res => {
     console.log('getdata-artistToopAlbums=', res)
-    results.push(...res.data.items)
+    results = res.data.topalbums.album
   }).catch(error => console.error(error))
-  const albums = results.topalbums.album
-  return Adapt.adaptAlbums(filterUndefined(albums))
+  return Adapt.adaptAlbums(results)
 }
 
 const getArtistTopTracks = async (artist) => {
   const url = buildApiUrl('artist.gettoptracks', { artist: sanitize(artist), limit: 10 })
-  const results = []
+  let tracks = null
 
-  axios.get(url).then(res => {
+  await axios.get(url).then(res => {
     console.log('getdata-artistTopTracks=', res)
-    results.push(...res.data.items)
+    tracks = res.data.toptracks.track
   }).catch(error => console.error(error))
-  return Adapt.adaptTracks(results.toptracks.track)
+  return Adapt.adaptTracks(tracks)
 }
 
 const getAlbumInfo = async (artist, album) => {
   const url = buildApiUrl('album.getinfo', { artist: sanitize(artist), album: sanitize(album) })
-  const results = []
+  let albm = null
 
-  axios.get(url).then(res => {
+  await axios.get(url).then(res => {
     console.log('getdata-albumInfo=', res)
-    results.push(...res.data.items)
+    albm = res.data.album
   }).catch(error => console.error(error))
-  return Adapt.adaptAlbums(results.album)
+  return Adapt.adaptAlbums(albm)
 }
 
 const getTrackInfo = async (artist, track) => {
   const url = buildApiUrl('track.getinfo', { artist: sanitize(artist), track: sanitize(track) })
-  const results = []
+  let trck = null
 
-  axios.get(url).then(res => {
+  await axios.get(url).then(res => {
     console.log('getdata-trackInfo=', res)
-    results.push(...res.data.items)
+    trck = res.data.track
   }).catch(error => console.error(error))
-  return Adapt.adaptTracks(results.track)
+  return Adapt.adaptTracks(trck)
 }
 
 const getSearchFunction = (type) => {
