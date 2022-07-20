@@ -87,7 +87,7 @@ export default {
           console.log('getdata-res=', res)
           let found = false
           for (let i = 0; i < res.data.items.length; i++) {
-            if (res.data.items[i].snippet.title.search(song.name)) {
+            if (res.data.items[i].snippet.title.search(song.artist) && res.data.items[i].snippet.title.search(song.name)) {
               this.$store.dispatch('SET_CURRENT_VIDEO', res.data.items[i])
               found = true
             }

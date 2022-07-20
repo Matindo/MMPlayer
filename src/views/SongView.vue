@@ -4,9 +4,10 @@
       <h3 class="text-light">Song: </h3>
       <b-row class="data-holder w-100 m-2" align-h="around" align-v="stretch">
         <b-col cols="12" md="6" class="justify center">
-          <b-row class="song-info m-2 mr-auto" align-h="around">
-            <span class="title">{{track.name}}</span><br />
+          <b-row class="song-info m-2 mr-auto" align-h="around" align-v="top">
+            <span class="success title"><h4>{{track.name}}</h4></span>
             <span class="text-secondary">{{track.artist.name}}</span><br />
+            <b-button variant="outline-warning" pill :href="track.url" target="_blank">Click to view LastFM page</b-button>
           </b-row>
           <b-row class="album-info w-100 bg-grey">
             <h4 class="text-light">Songs in the album:</h4><br />
@@ -24,7 +25,7 @@
           </b-row>
           <b-row class="video-details w-100 m-2">
             <span class="title">{{video.snippet.title}}</span><br />
-            <span class="channel-title text-secondary">{{video.snippet.channelTitle}}</span><br />
+            <span class="channel-title text-secondary mt-0">{{video.snippet.channelTitle}}</span><br />
           </b-row>
         </b-col>
       </b-row>
@@ -153,9 +154,9 @@ li {
  &.track-in-playlist {
   background-color: rgba(0, 0, 0, 0.557);
 
-  .track-title {
+  .title {
    font-weight: 600;
-   color: whitesmoke;
+   color: rgb(3, 223, 73);
   }
 
   .track-image {
