@@ -2,12 +2,11 @@
   <b-container fluid>
     <b-row class="w-100 song-details">
       <h3 class="text-light">Song: </h3>
-      <b-row class="w-100 mb-2 p-3" align-h="between" align-v="stretch">
+      <b-row class="data-holder w-100 m-2" align-h="around" align-v="stretch">
         <b-col cols="12" md="6" class="justify center">
           <b-row class="song-info m-2 mr-auto" align-h="around">
             <span class="title">{{track.name}}</span><br />
             <span class="text-secondary">{{track.artist.name}}</span><br />
-            <span class="description">{{track.wiki.published}}</span>
           </b-row>
           <b-row class="album-info w-100 bg-grey">
             <h4 class="text-light">Songs in the album:</h4><br />
@@ -31,7 +30,7 @@
       </b-row>
       <hr />
       <h3 class="text-light">Artist Details: </h3>
-      <b-row class="w-100 m-2" align-h="around" align-v="stretch">
+      <b-row class="data-holder w-100 m-2" align-h="around" align-v="stretch">
         <b-col class="artist" cols="12" md="6">
           <b-row class="artist-data w-100 ml-2 p-2">
             <b-media>
@@ -174,9 +173,10 @@ li {
   flex-direction: column;
 }
 .scrollable-div {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  white-space: nowrap;
+  text-align: justify;
+  min-height: 50px;
 }
 .album-frame {
   display: flex;
@@ -185,5 +185,10 @@ li {
   flex-wrap: wrap;
   overflow: auto;
   white-space: nowrap;
+}
+.data-holder {
+  border-radius: 8%;
+  border: ridge 2px blueviolet;
+  padding: 2em;
 }
 </style>
