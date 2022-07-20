@@ -85,7 +85,16 @@ export default {
         .get(apiUrl)
         .then(res => {
           console.log('getdata-res=', res)
-          this.$store.dispatch('SET_CURRENT_VIDEO', res.data.items[0])
+          let found = false
+          for (let i = 0; i < res.data.items.length; i++) {
+            if (res.data.items[i].snippet.title.search(song.name)) {
+              this.$store.dispatch('SET_CURRENT_VIDEO', res.data.items[i])
+              found = true
+            }
+          }
+          if (found === false) {
+            this.$store.dispatch('SET_CURRENT_VIDEO', res.data.items[0])
+          }
         }).catch(error => console.error(error))
     }
   }

@@ -28,8 +28,7 @@
           </b-row>
         </b-col>
       </b-row>
-      <hr />
-      <h3 class="text-light">Artist Details: </h3>
+      <h3 class="text-light mr-auto">Artist Details: </h3>
       <b-row class="data-holder w-100 m-2" align-h="around" align-v="stretch">
         <b-col class="artist" cols="12" md="6">
           <b-row class="artist-data w-100 ml-2 p-2">
@@ -40,7 +39,7 @@
               <h5 class="mt-0">{{artist.name}}</h5>
             </b-media>
             <div class="scrollable-div">
-              <p>{{artist.bio.content}}</p>
+              <b-form-textarea max-rows="10" plaintext readonly :value="artist.bio.content"></b-form-textarea>
             </div>
           </b-row>
           <b-row class="top-songs w-100 ml-2 p-2">
@@ -173,10 +172,7 @@ li {
   flex-direction: column;
 }
 .scrollable-div {
-  overflow-y: auto;
-  overflow-x: hidden;
-  text-align: justify;
-  min-height: 50px;
+  width: 100%
 }
 .album-frame {
   display: flex;
