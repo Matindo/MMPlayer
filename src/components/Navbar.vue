@@ -1,7 +1,7 @@
 <template>
   <div id="navbar">
     <b-navbar toggleable="md" type="dark">
-      <b-navbar-brand href="#">OSIDPLAYER</b-navbar-brand>
+      <b-navbar-brand href="" class="brand font-effect-shadow-multiple">OSIDPLAYER</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -21,10 +21,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple');
+
   .navbar {
     background: #00000043;
     color: whitesmoke;
     margin-bottom: 0.5em;
+  }
+  .brand {
+    font-family: 'Rancho';
+    font-size: x-large;
   }
     .nav-link {
     color: whitesmoke;

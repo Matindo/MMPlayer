@@ -1,8 +1,8 @@
 <template>
  <b-container class="table p-3 m-2">
-  <b-row class="text-heavy" cols="12" align-h="between" align-v="center">
-   <b-col>Song Name: </b-col>
-   <b-col>Artist:</b-col>
+  <b-row class="text-heavy w-100" cols="12" align-h="between" align-v="center">
+   <b-col>Song Name   - </b-col>
+   <b-col>Artist</b-col>
   </b-row>
   <b-row class="w-100" align-v="stretch" align-h="center">
    <b-col cols="12" class="table-data">
