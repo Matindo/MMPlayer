@@ -1,4 +1,8 @@
 # osidplayer
+This is a web application that you can use to search for music data. It finds any music video, name, album and artist details from the search parameter you entered.
+
+## Live Project view
+You can view the live project here: https://osidplayer.bysonicgroup.com/
 
 ## Project setup
 ```
